@@ -44,7 +44,10 @@ body{
   font-size: 1rem;
   padding-bottom: 29px;
 }
-
+.home-p{
+  font-size: 1rem;
+  font-weight: bold;
+}
 .home-btn{
   width: 193px;
   height: 52px;
