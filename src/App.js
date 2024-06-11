@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import Home from './components/Home'
+import Quiz from './components/Quiz'
+import { useState, useEffect } from 'react'
+
 
 function App() {
+  const [home, setHome] = useState(true)
+  const [quiz, setQuiz] = useState([{}])
+
+
+  function startQuiz(){
+    setHome(prevState => !prevState)
+  }
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      fetch("https://opentdb.com/api.php?amount=1&id=538")
+      .then(res => res.json())
+      .then(data => setQuiz(data.results))
+    }, 1000)
+  }, [])
+
+
+
+  console.log(quiz)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {home && <Home startQuiz={startQuiz}/>}
+      <div className="Main">
+        {!home && <Quiz dataQuiz={quiz}/>}
+        <button className="quizz-btn">Check answers</button>
+      </div>
+
     </div>
   );
 }
