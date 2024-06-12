@@ -4,12 +4,17 @@ import Quiz from './components/Quiz'
 import { useState, useEffect } from 'react'
 
 
+
 function App() {
   const [home, setHome] = useState(true)
 
 
-  function startQuiz(){
-    setHome(prevState => !prevState)
+  function startQuiz(error){
+    if (error){
+      window.location.reload()
+    } else {
+      setHome(prevState => !prevState)
+    }
   }
 
   const [quiz, setQuiz] = useState(null);
@@ -20,7 +25,7 @@ function App() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://opentdb.com/api.php?amount=1&type=multiple");
+        const response = await fetch("https://opentdb.com/api.php?amount=5&type=multiple");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -41,29 +46,27 @@ function App() {
     return () => clearTimeout(debounceTimeout); // Clean up the timeout on unmount
   }, []);
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+  let newElem
+  if (quiz){
+    newElem =  quiz.map((item, index) => {
+      return( 
+      <Quiz
+        key={index}
+        question={item.question}
+        correct_answer={item.correct_answer}
+        all_answers={[item.correct_answer, ...item.incorrect_answers].sort(() => Math.random() -0.5)}
+        indexMap={index}
+    />)
+    })
+  }
 
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
-
-  // if (!quiz) {
-  //   return <div>No data available</div>;
-  // }
-
-  console.log(quiz)
-  console.log(loading)
   return (
     <div className="App">
-      {home && <Home startQuiz={startQuiz} loading={loading}/>}
-      {loading && <div>Loading...</div>}
+      {home && <Home startQuiz={startQuiz} loading={loading} error={error}/>}
       <div className="Main">
-        {!home && <Quiz dataQuiz={quiz}/>}
-        <button className="quizz-btn">Check answers</button>
+        {!home && newElem }
+        {!home && <button className="quizz-btn">Check answers</button>}
       </div>
-
     </div>
   );
 }
