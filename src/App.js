@@ -86,14 +86,12 @@ let newElem
 
   let arrayCorrect = []
   function showAnswer(){
-    console.log("hello")
     setQuiz(prevState => prevState.map(item =>  ({...item, showAnswer: true}) ))
       for (let i = 0; i < quiz.length; i++){
         if (quiz[i].answerFromQuiz.isCorrect){
           arrayCorrect.push(1)
         }
       }
-      console.log(arrayCorrect)
       setCorrect(arrayCorrect)
       }
   
