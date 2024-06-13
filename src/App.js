@@ -19,6 +19,7 @@ function App() {
   const [quiz, setQuiz] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [correct, setCorrect] = useState()
 
 
 
@@ -75,32 +76,46 @@ let newElem
       })
     
     }
-
   
+  
+
+
+
 
   function passData(id, parametro){
     setQuiz(prevState => prevState.map(item => item.id === id ? {...item, answerFromQuiz: parametro} : item))
   }
 
+  let arrayCorrect = []
   function showAnswer(){
     console.log("hello")
     setQuiz(prevState => prevState.map(item =>  ({...item, showAnswer: true}) ))
-  }
+      for (let i = 0; i < quiz.length; i++){
+        if (quiz[i].answerFromQuiz.isCorrect){
+          arrayCorrect.push(1)
+        }
+      }
+      console.log(arrayCorrect)
+      setCorrect(arrayCorrect)
+      }
+  
 
-  let stateElem 
-  if (quiz){
-    stateElem = quiz.map(item => <p>{JSON.stringify(item)}</p>)
-  }
+  // let stateElem 
+  // if (quiz){
+  //   stateElem = quiz.map(item => <p>{JSON.stringify(item)}</p>)
+  // }
   return (
     <div className="App">
-      <div className="state-app">
+      {/* <div className="state-app">
         <p>state App</p>
       {stateElem}
-      </div>
+      </div> */}
       {home && <Home startQuiz={startQuiz} loading={loading} error={error}/>}
       <div className="Main">
         {!home && newElem }
         {!home && <button className="quizz-btn" onClick={showAnswer}>Check answers</button>}
+        {!home && <a href="index.html" className="reload-a">reload</a>}
+        {!home && quiz[0]?.showAnswer && <p className="score-p">{`your score is ${correct.length}/5`}</p>}
       </div>
     </div>
   );

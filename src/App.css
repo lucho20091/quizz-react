@@ -7,7 +7,7 @@ body{
   display: grid;
   place-items: center;
   height: 100vh;
-  position: relative;
+  /* position: relative; */
 }
 
 .App{
@@ -15,6 +15,7 @@ body{
   max-width: 670px;
   min-height: 550px;
   background: #F5F7FB;
+  position: relative;
 }
 
 /*   font-family: "Inter", sans-serif;
@@ -168,4 +169,22 @@ body{
   overflow-wrap: break-word;
   flex-direction: column;
   justify-content: center;
+}
+.reload-a{
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  background: red;
+  border-radius: 15px;
+  color: white;
+  width: 80px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+.score-p{
+  font-weight: bold;
+  font-size: 1.2rem;
 }

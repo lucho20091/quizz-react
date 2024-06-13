@@ -7,15 +7,15 @@ export default function Quiz({question, correct_answer, all_answers, indexMap, p
     const [answer, setAnswer] = useState("")
     const [answersObject, setAnswersObject] = useState([])
 
-    let stateElem 
-    if (answer){
-      stateElem =  ( <p>{JSON.stringify(answer)}</p> )
-    }
+    // let stateElem 
+    // if (answer){
+    //   stateElem =  ( <p>{JSON.stringify(answer)}</p> )
+    // }
 
-    let stateElem2
-    if (answersObject){
-        stateElem2 = answersObject.map(item => (<p>{JSON.stringify(answersObject)}</p>))
-    }
+    // let stateElem2
+    // if (answersObject){
+    //     stateElem2 = answersObject.map(item => (<p>{JSON.stringify(answersObject)}</p>))
+    // }
 
         useEffect(() => {
             const initialAnswers = all_answers.map((item, index) => ({
@@ -76,14 +76,14 @@ useEffect(() => {
 
     return (
         <div className="quizz">
-            <div className="state-quiz">
+            {/* <div className="state-quiz">
                 <p>answers quiz</p>
                 {stateElem}
             </div>
             <div className="state-quiz2">
                 <p>answerobject quiz</p>
                 {stateElem2}
-            </div>
+            </div> */}
             <form className='quizz-form'>
             <legend className='quizz-legend'>{decode(question)}</legend>
             <div className="quizz-div">
