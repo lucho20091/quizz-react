@@ -71,7 +71,7 @@ useEffect(() => {
         isSelected: answer.isSelected,
         isCorrect: answer.isCorrect
     })
-}, [answer])
+}, )
 
 
     return (
