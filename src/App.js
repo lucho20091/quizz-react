@@ -28,7 +28,7 @@ function App() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://opentdb.com/api.php?amount=5&type=multiple");
+        const response = await fetch("https://opentdb.com/api.php?amount=5&category=27&difficulty=easy&type=multiple");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
