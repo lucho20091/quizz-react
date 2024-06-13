@@ -1,13 +1,12 @@
 import './App.css';
 import Home from './components/Home'
 import Quiz from './components/Quiz'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 
 
 function App() {
   const [home, setHome] = useState(true)
-
 
   function startQuiz(error){
     if (error){
@@ -21,6 +20,11 @@ function App() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
+
+  
+  // console.log(quiz[0]?.answerFromQuiz)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,6 +34,14 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        for (let i = 0; i < data.results.length; i++) {
+          const shufled = [data.results[i].correct_answer, ...data.results[i].incorrect_answers].sort(() => Math.random() - 0.5);
+          data.results[i].id = i
+          data.results[i].shufled = shufled
+          data.results[i].answerFromQuiz= null
+          data.results[i].showAnswer = false
+        }
+       
         setQuiz(data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -46,26 +58,49 @@ function App() {
     return () => clearTimeout(debounceTimeout); // Clean up the timeout on unmount
   }, []);
 
-  let newElem
-  if (quiz){
-    newElem =  quiz.map((item, index) => {
-      return( 
-      <Quiz
-        key={index}
-        question={item.question}
-        correct_answer={item.correct_answer}
-        all_answers={[item.correct_answer, ...item.incorrect_answers].sort(() => Math.random() -0.5)}
-        indexMap={index}
-    />)
-    })
+let newElem 
+    if (quiz){
+       newElem =  quiz.map((item, index) => {
+        return( 
+        <Quiz
+          idQuiz={item.id}
+          key={item.id}
+          question={item.question}
+          correct_answer={item.correct_answer}
+          all_answers={item.shufled} 
+          indexMap={index}
+          passData={passData}
+          showAnswer={item.showAnswer}
+      />)
+      })
+    
+    }
+
+  
+
+  function passData(id, parametro){
+    setQuiz(prevState => prevState.map(item => item.id === id ? {...item, answerFromQuiz: parametro} : item))
   }
 
+  function showAnswer(){
+    console.log("hello")
+    setQuiz(prevState => prevState.map(item =>  ({...item, showAnswer: true}) ))
+  }
+
+  let stateElem 
+  if (quiz){
+    stateElem = quiz.map(item => <p>{JSON.stringify(item)}</p>)
+  }
   return (
     <div className="App">
+      <div className="state-app">
+        <p>state App</p>
+      {stateElem}
+      </div>
       {home && <Home startQuiz={startQuiz} loading={loading} error={error}/>}
       <div className="Main">
         {!home && newElem }
-        {!home && <button className="quizz-btn">Check answers</button>}
+        {!home && <button className="quizz-btn" onClick={showAnswer}>Check answers</button>}
       </div>
     </div>
   );

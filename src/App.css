@@ -7,6 +7,7 @@ body{
   display: grid;
   place-items: center;
   height: 100vh;
+  position: relative;
 }
 
 .App{
@@ -121,4 +122,50 @@ body{
 .selected{
   background: #618B4A ;
   color: #D7F9F1;
+}
+.correct{
+  background: #271175 ;
+  color: #D7F9F1;
+}
+
+.state-app{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  padding: 20px;
+  background: black;
+  color: white;
+  display: flex;
+  overflow-wrap: break-word;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.state-quiz{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  padding: 20px;
+  background: black;
+  color: white;
+  display: flex;
+  overflow-wrap: break-word;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.state-quiz2{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 500px;
+  padding: 20px;
+  background: black;
+  color: white;
+  display: flex;
+  overflow-wrap: break-word;
+  flex-direction: column;
+  justify-content: center;
 }
