@@ -1,9 +1,7 @@
 import './App.css';
 import Home from './components/Home'
 import Quiz from './components/Quiz'
-import { useState, useEffect, useRef } from 'react'
-
-
+import { useState, useEffect } from 'react'
 
 function App() {
   const [home, setHome] = useState(true)
